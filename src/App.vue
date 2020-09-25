@@ -46,6 +46,7 @@ export default {
     onDeleteItem(id) {
       this.$delete(this.list, id);
     },
+    onFormSubmit() {}
   },
 };
 </script>
