@@ -1,18 +1,21 @@
 <template>
   <div class="budget-list-wrap">
     <ElCard header="header">
-      <div class="list-item" v-for="(item, prop) in list" :key="prop">
-        <span class="budget-comment">{{ item.comment }}</span>
-        <span class="budget-value">{{ item.value }}</span>
-        <ElButton type="danger" size="mini">Delete</ElButton>
-      </div>
+      <template v-if="!isEmpty">
+        <div class="list-item" v-for="(item, prop) in list" :key="prop">
+          <span class="budget-comment">{{ item.comment }}</span>
+          <span class="budget-value">{{ item.value }}</span>
+          <ElButton type="danger" size="mini">Delete</ElButton>
+        </div>
+      </template>
+      <ElAlert v-else type="info" :title="emptyTitle" :closable="false" />
     </ElCard>
   </div>
 </template>
 
 <script>
 export default {
-  name: "BudgetList",
+  name: 'BudgetList',
   props: {
     list: {
       type: Object,
@@ -20,8 +23,14 @@ export default {
     },
   },
   data: () => ({
-    header: "Budget List",
+    header: 'Budget List',
+    emptyTitle: 'Empty List',
   }),
+  computed: {
+    isEmpty() {
+      return !Object.keys(this.list).length;
+    },
+  },
 };
 </script>
 
