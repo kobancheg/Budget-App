@@ -54,7 +54,14 @@ export default {
     },
   }),
   methods: {
-    onSubmit() {},
+    onSubmit() {
+      this.$refs.addItemForm.validate((valid) => {
+        if (valid) {
+          this.$emit('submitForm', { ...this.formData });
+          this.$refs.addItemForm.resetFields();
+        }
+      });
+    },
   },
 };
 </script>
