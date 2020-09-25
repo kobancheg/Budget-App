@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <BudgetList />
+    <BudgetList :list="list" />
   </div>
 </template>
 
