@@ -1,8 +1,9 @@
 <template>
   <div>
     <div class="list-item" v-for="(item, prop) in list" :key="prop">
+      <i :class="[item.value > 0 ? 'el-icon-top' : 'el-icon-bottom']"></i>
       <span class="budget-comment">{{ item.comment }}</span>
-      <span class="budget-value">{{ item.value }}</span>
+      <span class="budget-value" :class="[item.value > 0 ? 'success' : 'danger']">{{ item.value }}</span>
       <ElButton type="danger" size="mini" @click="dialogVisible = true"
         >Delete</ElButton
       >
@@ -37,11 +38,9 @@ export default {
       default: () => ({}),
     },
   },
-  data() {
-    return {
-      dialogVisible: false,
-    };
-  },
+  data: () => ({
+    dialogVisible: false,
+  }),
   methods: {
     handleClose(done) {
       done();

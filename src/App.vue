@@ -37,11 +37,13 @@ export default {
   }),
   computed: {
     totalBalance() {
-      return Object.values(this.list).reduce(
-        (acc, item) =>
-          item.type === "OUTCOME" ? acc - item.value : acc + item.value,
-        0
-      );
+      return Object.values(this.list).reduce((acc, item) => {
+        if (item.type === "OUTCOME" && item.value > 0) {
+          return acc - item.value;
+        } else {
+          return acc + item.value;
+        }
+      }, 0);
     },
   },
   created() {
@@ -70,5 +72,13 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.success {
+  color: #67c23a;
+}
+
+.danger {
+  color: #f56c6c;
 }
 </style>
