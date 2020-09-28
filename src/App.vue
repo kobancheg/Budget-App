@@ -38,7 +38,8 @@ export default {
   computed: {
     totalBalance() {
       return Object.values(this.list).reduce(
-        (acc, item) => acc + item.value,
+        (acc, item) =>
+          item.type === "OUTCOME" ? acc - item.value : acc + item.value,
         0
       );
     },

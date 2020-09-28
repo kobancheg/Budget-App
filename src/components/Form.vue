@@ -29,35 +29,36 @@
 
 <script>
 export default {
-  name: 'Form',
+  name: "Form",
   data: () => ({
     formData: {
-      type: 'INCOME',
-      comment: '',
+      type: "INCOME",
+      comment: "",
       value: 0,
     },
     rules: {
       type: [
-        { required: true, message: 'Please select type', trigger: 'blur' },
+        { required: true, message: "Please select type", trigger: "blur" },
       ],
       comment: [
-        { required: true, message: 'Please input comment', trigger: 'change' },
+        { required: true, message: "Please input comment", trigger: "change" },
       ],
       value: [
-        { required: true, message: 'Please input value', trigger: 'change' },
+        { required: true, message: "Please input value", trigger: "change" },
         {
-          type: 'number',
-          message: 'Value must be a number',
-          trigger: 'change',
+          type: "number",
+          message: "Value must be a number",
+          trigger: "change",
         },
       ],
     },
   }),
+
   methods: {
     onSubmit() {
       this.$refs.addItemForm.validate((valid) => {
         if (valid) {
-          this.$emit('submitForm', { ...this.formData });
+          this.$emit("submitForm", { ...this.formData });
           this.$refs.addItemForm.resetFields();
         }
       });
