@@ -3,9 +3,25 @@
     <div class="list-item" v-for="(item, prop) in list" :key="prop">
       <span class="budget-comment">{{ item.comment }}</span>
       <span class="budget-value">{{ item.value }}</span>
-      <ElButton type="danger" size="mini" @click="deleteItem(item.id)"
+      <ElButton type="danger" size="mini" @click="dialogVisible = true"
         >Delete</ElButton
       >
+      <ElDialog
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <span>Want to delete a post?</span>
+        <span slot="footer" class="dialog-footer">
+          <ElButton size="mini" @click="dialogVisible = false">Cancel</ElButton>
+          <ElButton
+            type="primary"
+            size="mini"
+            @click="(dialogVisible = false), deleteItem(item.id)"
+            >Confirm</ElButton
+          >
+        </span>
+      </ElDialog>
     </div>
   </div>
 </template>
@@ -21,7 +37,15 @@ export default {
       default: () => ({}),
     },
   },
+  data() {
+    return {
+      dialogVisible: false,
+    };
+  },
   methods: {
+    handleClose(done) {
+      done();
+    },
     deleteItem(id) {
       bus.$emit("deleteItem", id);
     },
