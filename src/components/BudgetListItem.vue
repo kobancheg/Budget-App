@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="list-item" v-for="(item, prop) in sortedList" :key="prop">
-      <i :class="[item.value > 0 ? 'el-icon-top' : 'el-icon-bottom']"></i>
+      <i v-if="item.type === 'INCOME'" class="el-icon-top"></i>
+      <i v-else class="el-icon-bottom"></i>
       <span class="budget-comment">{{ item.comment }}</span>
-      <span
-        class="budget-value"
-        :class="[item.value > 0 ? 'success' : 'danger']"
-        >{{ item.value }}</span
-      >
+      <span class="budget-value success" v-if="item.type === 'INCOME'">{{
+        item.value
+      }}</span>
+      <span class="budget-value danger" v-else>{{ '-' + item.value }}</span>
       <ElButton type="danger" size="mini" @click="dialogVisible = true"
         >Delete</ElButton
       >
@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import { bus } from "@/main";
+import { bus } from '@/main';
 
 export default {
-  name: "BudgetListItem",
+  name: 'BudgetListItem',
   props: {
     list: {
       type: Object,
@@ -43,7 +43,7 @@ export default {
     },
     sortParam: {
       type: String,
-      default: "all",
+      default: 'all',
     },
   },
   data: () => ({
@@ -54,17 +54,17 @@ export default {
       done();
     },
     deleteItem(id) {
-      bus.$emit("deleteItem", id);
+      bus.$emit('deleteItem', id);
     },
   },
   computed: {
     sortedList() {
       switch (this.sortParam) {
-        case "profit":
+        case 'profit':
           return Object.values(this.list).filter((item) => item.value > 0);
-        case "loss":
+        case 'loss':
           return Object.values(this.list).filter((item) => item.value < 0);
-        case "all":
+        case 'all':
           return this.list;
         default:
           return this.list;

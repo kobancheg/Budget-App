@@ -29,7 +29,7 @@ export default {
       },
       2: {
         type: "OUTCOME",
-        value: -50,
+        value: 50,
         comment: "Some outcome comment",
         id: 2,
       },
