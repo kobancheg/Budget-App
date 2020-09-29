@@ -61,9 +61,13 @@ export default {
     sortedList() {
       switch (this.sortParam) {
         case 'profit':
-          return Object.values(this.list).filter((item) => item.value > 0);
+          return Object.values(this.list).filter(
+            (item) => item.type === 'INCOME'
+          );
         case 'loss':
-          return Object.values(this.list).filter((item) => item.value < 0);
+          return Object.values(this.list).filter(
+            (item) => item.type === 'OUTCOME'
+          );
         case 'all':
           return this.list;
         default:
