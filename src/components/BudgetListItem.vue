@@ -7,35 +7,20 @@
       <span class="budget-value success" v-if="item.type === 'INCOME'">{{
         item.value
       }}</span>
-      <span class="budget-value danger" v-else>{{ '-' + item.value }}</span>
-      <ElButton type="danger" size="mini" @click="dialogVisible = true"
+      <span class="budget-value danger" v-else>{{ "-" + item.value }}</span>
+      <ElButton type="danger" size="mini" @click="open(item.id)"
         >Delete</ElButton
       >
-      <ElDialog
-        :visible.sync="dialogVisible"
-        width="30%"
-        :before-close="handleClose"
-      >
-        <span>Want to delete a post?</span>
-        <span slot="footer" class="dialog-footer">
-          <ElButton size="mini" @click="dialogVisible = false">Cancel</ElButton>
-          <ElButton
-            type="primary"
-            size="mini"
-            @click="(dialogVisible = false), deleteItem(item.id)"
-            >Confirm</ElButton
-          >
-        </span>
-      </ElDialog>
     </div>
   </div>
 </template>
 
 <script>
-import { bus } from '@/main';
+import { MessageBox, Message } from "element-ui";
+import { bus } from "@/main";
 
 export default {
-  name: 'BudgetListItem',
+  name: "BudgetListItem",
   props: {
     list: {
       type: Object,
@@ -43,32 +28,47 @@ export default {
     },
     sortParam: {
       type: String,
-      default: 'all',
+      default: "all",
     },
   },
-  data: () => ({
-    dialogVisible: false,
-  }),
   methods: {
-    handleClose(done) {
-      done();
-    },
-    deleteItem(id) {
-      bus.$emit('deleteItem', id);
+    open(id) {
+      MessageBox.confirm(
+        "This will permanently delete the entry. Continue?",
+        "Warning",
+        {
+          confirmButtonText: "OK",
+          cancelButtonText: "Cancel",
+          type: "warning",
+        }
+      )
+        .then(() => {
+          bus.$emit("deleteItem", id);
+          Message({
+            type: "success",
+            message: "Delete completed",
+          });
+        })
+        .catch(() => {
+          Message({
+            type: "info",
+            message: "Delete canceled",
+          });
+        });
     },
   },
   computed: {
     sortedList() {
       switch (this.sortParam) {
-        case 'profit':
+        case "profit":
           return Object.values(this.list).filter(
-            (item) => item.type === 'INCOME'
+            (item) => item.type === "INCOME"
           );
-        case 'loss':
+        case "loss":
           return Object.values(this.list).filter(
-            (item) => item.type === 'OUTCOME'
+            (item) => item.type === "OUTCOME"
           );
-        case 'all':
+        case "all":
           return this.list;
         default:
           return this.list;
