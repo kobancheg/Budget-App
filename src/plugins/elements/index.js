@@ -12,6 +12,8 @@ import {
   Option,
   Alert,
   Dialog,
+  Divider,
+  Row,
 } from 'element-ui';
 
 const elements = [
@@ -24,6 +26,8 @@ const elements = [
   Option,
   Alert,
   Dialog,
+  Divider,
+  Row,
 ];
 
 locale.use(lang);

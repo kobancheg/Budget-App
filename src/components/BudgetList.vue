@@ -1,8 +1,29 @@
 <template>
   <div class="budget-list-wrap">
     <ElCard :header="header">
+      <ElRow type="flex" class="row-bg" justify="space-around">
+        <ElButton
+          type="text"
+          icon="el-icon-sort"
+          @click="sortParam = 'all'"
+        ></ElButton>
+        <ElButton
+          class="success"
+          type="text"
+          icon="el-icon-sort-up"
+          @click="sortParam = 'profit'"
+        ></ElButton>
+        <ElButton
+          class="danger"
+          type="text"
+          icon="el-icon-sort-down"
+          @click="sortParam = 'loss'"
+        >
+        </ElButton>
+      </ElRow>
+      <ElDivider></ElDivider>
       <template v-if="!isEmpty">
-        <BudgetListItem :list="list" />
+        <BudgetListItem :list="list" :sortParam="sortParam" />
       </template>
       <ElAlert v-else type="info" :title="emptyTitle" :closable="false" />
     </ElCard>
@@ -21,12 +42,14 @@ export default {
   data: () => ({
     header: "Budget List",
     emptyTitle: "Empty List",
+    sortParam: "",
   }),
   computed: {
     isEmpty() {
       return !Object.keys(this.list).length;
     },
   },
+  methods: {},
 };
 </script>
 
@@ -34,5 +57,17 @@ export default {
 .budget-list-wrap {
   max-width: 500px;
   margin: auto;
+}
+
+.el-button--text {
+  font-size: 20px;
+}
+
+.success {
+  color: #67c23a;
+}
+
+.danger {
+  color: #f56c6c;
 }
 </style>

@@ -1,9 +1,13 @@
 <template>
   <div>
-    <div class="list-item" v-for="(item, prop) in list" :key="prop">
+    <div class="list-item" v-for="(item, prop) in sortedList" :key="prop">
       <i :class="[item.value > 0 ? 'el-icon-top' : 'el-icon-bottom']"></i>
       <span class="budget-comment">{{ item.comment }}</span>
-      <span class="budget-value" :class="[item.value > 0 ? 'success' : 'danger']">{{ item.value }}</span>
+      <span
+        class="budget-value"
+        :class="[item.value > 0 ? 'success' : 'danger']"
+        >{{ item.value }}</span
+      >
       <ElButton type="danger" size="mini" @click="dialogVisible = true"
         >Delete</ElButton
       >
@@ -37,6 +41,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    sortParam: {
+      type: String,
+      default: "all",
+    },
   },
   data: () => ({
     dialogVisible: false,
@@ -47,6 +55,20 @@ export default {
     },
     deleteItem(id) {
       bus.$emit("deleteItem", id);
+    },
+  },
+  computed: {
+    sortedList() {
+      switch (this.sortParam) {
+        case "profit":
+          return Object.values(this.list).filter((item) => item.value > 0);
+        case "loss":
+          return Object.values(this.list).filter((item) => item.value < 0);
+        case "all":
+          return this.list;
+        default:
+          return this.list;
+      }
     },
   },
 };
@@ -63,5 +85,13 @@ export default {
   font-weight: bold;
   margin-left: auto;
   margin-right: 20px;
+}
+
+.el-icon-top {
+  color: #67c23a;
+}
+
+.el-icon-bottom {
+  color: #f56c6c;
 }
 </style>

@@ -81,4 +81,8 @@ export default {
 .danger {
   color: #f56c6c;
 }
+
+.el-card__header {
+  border-bottom: none !important;
+}
 </style>
