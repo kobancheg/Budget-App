@@ -57,7 +57,7 @@ export default {
             trigger: "change",
           },
         ],
-        value: [{ validator: checkValue, trigger: "change" }],
+        value: [{ required: true, validator: checkValue, trigger: "change" }],
       },
     };
   },
