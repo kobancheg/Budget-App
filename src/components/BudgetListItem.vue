@@ -17,21 +17,26 @@
 
 <script>
 import { MessageBox, Message } from "element-ui";
-import { bus } from "@/main";
+// import { bus } from "@/main";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "BudgetListItem",
   props: {
-    list: {
-      type: Object,
-      default: () => ({}),
-    },
+    // list: {
+    //   type: Object,
+    //   default: () => ({}),
+    // },
     sortParam: {
       type: String,
       default: "all",
     },
   },
   methods: {
+    ...mapActions("debet", ["onDeleteItem"]),
+    deleteItem(id) {
+      this.onDeleteItem(id);
+    },
     open(id) {
       MessageBox.confirm(
         "This will permanently delete the entry. Continue?",
@@ -43,7 +48,7 @@ export default {
         }
       )
         .then(() => {
-          bus.$emit("deleteItem", id);
+          this.deleteItem(id);
           Message({
             type: "success",
             message: "Delete completed",
@@ -58,20 +63,21 @@ export default {
     },
   },
   computed: {
+    ...mapGetters("debet", ["debetList"]),
     sortedList() {
       switch (this.sortParam) {
         case "profit":
-          return Object.values(this.list).filter(
+          return Object.values(this.debetList).filter(
             (item) => item.type === "INCOME"
           );
         case "loss":
-          return Object.values(this.list).filter(
+          return Object.values(this.debetList).filter(
             (item) => item.type === "OUTCOME"
           );
         case "all":
-          return this.list;
+          return this.debetList;
         default:
-          return this.list;
+          return this.debetList;
       }
     },
   },

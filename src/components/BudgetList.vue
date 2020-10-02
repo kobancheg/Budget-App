@@ -23,7 +23,7 @@
       </ElRow>
       <ElDivider></ElDivider>
       <template v-if="!isEmpty">
-        <BudgetListItem :list="list" :sortParam="sortParam" />
+        <BudgetListItem :sortParam="sortParam" />
       </template>
       <ElAlert v-else type="info" :title="emptyTitle" :closable="false" />
     </ElCard>
@@ -32,21 +32,23 @@
 
 <script>
 import BudgetListItem from "@/components/BudgetListItem";
+import { mapGetters } from "vuex";
 
 export default {
   name: "BudgetList",
   components: {
     BudgetListItem,
   },
-  props: ["list"],
+  // props: ["list"],
   data: () => ({
     header: "Budget List",
     emptyTitle: "Empty List",
     sortParam: "",
   }),
   computed: {
+    ...mapGetters("debet", ["debetList"]),
     isEmpty() {
-      return !Object.keys(this.list).length;
+      return !Object.keys(this.debetList).length;
     },
   },
   methods: {},
