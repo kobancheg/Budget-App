@@ -39,7 +39,6 @@ export default {
   components: {
     BudgetListItem,
   },
-  // props: ["list"],
   data: () => ({
     header: "Budget List",
     emptyTitle: "Empty List",
@@ -51,7 +50,6 @@ export default {
       return !Object.keys(this.debetList).length;
     },
   },
-  methods: {},
 };
 </script>
 

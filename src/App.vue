@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Form @submitForm="onFormSubmit" />
+    <Form />
     <TotalBalance :total="totalBalance" />
     <BudgetList />
   </div>
@@ -20,22 +20,6 @@ export default {
     TotalBalance,
     Form,
   },
-  data: () => ({
-    // list: {
-    //   1: {
-    //     type: "INCOME",
-    //     value: 100,
-    //     comment: "Some comment",
-    //     id: 1,
-    //   },
-    //   2: {
-    //     type: "OUTCOME",
-    //     value: 50,
-    //     comment: "Some outcome comment",
-    //     id: 2,
-    //   },
-    // },
-  }),
   computed: {
     ...mapGetters("debet", ["debetList"]),
     totalBalance() {
@@ -46,21 +30,6 @@ export default {
           return acc + item.value;
         }
       }, 0);
-    },
-  },
-  // created() {
-  //   bus.$on("deleteItem", this.onDeleteItem);
-  // },
-  methods: {
-    // onDeleteItem(id) {
-    //   this.$delete(this.debetList, id);
-    // },
-    onFormSubmit(data) {
-      const newObj = {
-        ...data,
-        id: String(Math.random()),
-      };
-      this.$set(this.list, newObj.id, newObj);
     },
   },
 };

@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "Form",
   data() {
@@ -60,10 +62,11 @@ export default {
     };
   },
   methods: {
+    ...mapActions("debet", ["addNewListItem"]),
     onSubmit() {
       this.$refs.addItemForm.validate((valid) => {
         if (valid) {
-          this.$emit("submitForm", { ...this.formData });
+          this.addNewListItem({ ...this.formData });
           this.$refs.addItemForm.resetFields();
         }
       });

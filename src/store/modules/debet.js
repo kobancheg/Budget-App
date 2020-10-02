@@ -23,15 +23,18 @@ const debetStore = {
     },
     mutations: {
       REMOVE_ITEM (state, id) {
-        // state.list.$remove(id)
         Vue.delete(state.list, id);
-        console.log(state.list)
+      },
+      ADD_ITEM (state, newObj) {
+        Vue.set(state.list, newObj.id, newObj)
       }
     },
     actions: {
+      addNewListItem({ commit }, data) {
+        const newObj = { ...data, id: String(Math.random()) };
+        commit("ADD_ITEM", newObj)
+      },
       onDeleteItem({ commit }, id) {
-        // this.$delete(this.debetList, id);
-        console.log(id)
         commit("REMOVE_ITEM", id);
       }
     },

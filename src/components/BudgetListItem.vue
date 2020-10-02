@@ -23,10 +23,6 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "BudgetListItem",
   props: {
-    // list: {
-    //   type: Object,
-    //   default: () => ({}),
-    // },
     sortParam: {
       type: String,
       default: "all",
